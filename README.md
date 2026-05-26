@@ -12,7 +12,7 @@
 
 **A full-stack MERN expense tracking application with real-time analytics, budget management, and secure JWT authentication.**
 
-[📸 Screenshots](#-screenshots) • [⚙️ Setup](#-local-setup) • [📡 API Docs](#-api-endpoints)
+[🚀 Live Demo](https://spendly-lac-two.vercel.app) • [📸 Screenshots](#-screenshots) • [⚙️ Setup](#-local-setup) • [📡 API Docs](#-api-endpoints)
 
 </div>
 
@@ -291,8 +291,8 @@ npm start
 
 | Service | Platform | Status |
 |---------|----------|--------|
-| Frontend | Vercel | 🔜 Coming Soon |
-| Backend | Render | 🔜 Coming Soon |
+| Frontend | Vercel | [Live](https://spendly-lac-two.vercel.app) |
+| Backend | Render |  [Live](https://spendly-production-1721.up.railway.app) |
 | Database | MongoDB Atlas | ✅ Connected |
 
 ---
