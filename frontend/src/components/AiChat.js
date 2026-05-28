@@ -94,6 +94,19 @@ export default function AiChat() {
     }
   };
 
+  
+const startNewChat = () => {
+  setMessages([
+    {
+      role: 'ai',
+      text:
+        "👋 Hi! I'm Spendly AI — your personal finance assistant!\n\nAsk me anything about your finances:\n• 💰 Expense analysis\n• 📊 Budget suggestions\n• 📈 Investment tips\n• 📋 Monthly report\n\nI'll reply in whatever language you write in! 🌐"
+    }
+  ]);
+};
+
+
+
   return (
     <>
       {/* Floating Chat Button */}
@@ -132,7 +145,7 @@ export default function AiChat() {
           <div style={{
             padding: '14px 18px',
             borderBottom: '1px solid var(--border)',
-            background: 'linear-gradient(135deg, rgba(124,107,255,0.2), rgba(124,107,255,0.05))',
+            background: 'linear-gradient(135deg, rgba(124,107,255,0.2), rgba(27, 25, 34, 0.05))',
             borderRadius: '20px 20px 0 0',
             display: 'flex', justifyContent: 'space-between', alignItems: 'center'
           }}>
@@ -148,22 +161,52 @@ export default function AiChat() {
                 <div style={{ fontSize: 11, color: 'var(--green2)' }}>● Online • Any Language</div>
               </div>
             </div>
-            <button
-              onClick={generateReport}
-              disabled={reportLoading}
-              style={{
-                display: 'flex', alignItems: 'center', gap: 4,
-                padding: '6px 10px', borderRadius: 8,
-                background: 'rgba(124,107,255,0.2)',
-                border: '1px solid rgba(124,107,255,0.3)',
-                cursor: 'pointer', color: 'var(--accent3)',
-                fontSize: 11, fontWeight: 600,
-                fontFamily: 'Sora, sans-serif'
-              }}
-            >
-              <FileText size={12} />
-              {reportLoading ? 'Generating...' : 'Report'}
-            </button>
+        
+<div style={{ display: 'flex', gap: 8 }}>
+
+  {/* New Chat Button */}
+  <button
+    onClick={startNewChat}
+    style={{
+      padding: '6px 10px',
+      borderRadius: 8,
+      border: '1px solid var(--border)',
+      background: 'var(--bg3)',
+      cursor: 'pointer',
+      color: 'var(--text)',
+      fontSize: 11,
+      fontWeight: 600,
+      fontFamily: 'Sora, sans-serif'
+    }}
+  >
+    New Chat
+  </button>
+
+  {/* Report Button */}
+  <button
+    onClick={generateReport}
+    disabled={reportLoading}
+    style={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: 4,
+      padding: '6px 10px',
+      borderRadius: 8,
+      background: 'rgba(124,107,255,0.2)',
+      border: '1px solid rgba(124,107,255,0.3)',
+      cursor: 'pointer',
+      color: 'var(--accent3)',
+      fontSize: 11,
+      fontWeight: 600,
+      fontFamily: 'Sora, sans-serif'
+    }}
+  >
+    <FileText size={12} />
+    {reportLoading ? 'Generating...' : 'Report'}
+  </button>
+
+</div>
+
           </div>
 
           {/* Messages */}
