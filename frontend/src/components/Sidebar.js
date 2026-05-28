@@ -35,6 +35,7 @@ export default function Sidebar() {
   ];
 
  return (
+  
   <>
     <button
       className="menu-btn"
@@ -42,6 +43,12 @@ export default function Sidebar() {
     >
       ☰
     </button>
+
+    {
+    sidebarOpen && (<div
+    className="overlay"
+    onClick={() => setSidebarOpen(false)}/>)
+  }
 
     <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
       <div className="logo-wrap">
