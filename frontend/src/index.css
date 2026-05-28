@@ -389,33 +389,21 @@ select.input { cursor: pointer; }
 
 
 
-.menu-btn {
-  display: none;
-  position: fixed;
-  top: 15px;
-  left: 15px;
-  z-index: 1000;
-  padding: 8px 12px;
-  background: black;
-  color: white;
-  border-radius: 5px;
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
 }
 
-@media (max-width: 768px) {
-  .menu-btn {
-    display: block;
-  }
+.menu-icon {
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
 
-  .sidebar {
-    position: fixed;
-    left: -260px;
-    top: 0;
-    height: 100%;
-    transition: 0.3s;
-    z-index: 999;
-  }
-
-  .sidebar.open {
-    left: 0;
-  }
+.menu-icon:hover {
+  background: rgba(255,255,255,0.15);
 }

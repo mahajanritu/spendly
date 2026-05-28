@@ -47,13 +47,15 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Mobile Menu Button */}
-      <button
-        className="menu-btn"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        ☰
-      </button>
+      <div className="topbar">
+  <button className="menu-icon" onClick={() => setIsOpen(true)}>
+    ☰
+  </button>
+
+  <h2>Dashboard</h2>
+
+  <button className="add-btn">+ Add Transaction</button>
+</div>
 
       {/* Sidebar */}
       <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
