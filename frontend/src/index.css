@@ -385,3 +385,36 @@ select.input { cursor: pointer; }
   .main-content { margin-left: 0; padding: 20px; }
   .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
 }
+
+
+
+
+.menu-btn {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1000;
+  background: #000;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+  .menu-btn {
+    display: block;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: -260px;
+    top: 0;
+    height: 100%;
+    transition: 0.3s;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+}
