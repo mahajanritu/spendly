@@ -66,11 +66,8 @@ User Financial Data:
 - Recent Transactions: ${JSON.stringify(expenses.slice(0, 15))}
 - Monthly Budget: Rs.${req.user.monthlyBudget || 'Not set'}
 
-RESPONSE FORMAT - Return ONLY this JSON (no extra text):
-{
-  "reply": "your answer here in user's language",
-  "suggestions": ["suggestion1", "suggestion2", "suggestion3", "suggestion4"]
-}
+RESPONSE FORMAT - You MUST return ONLY raw JSON, no markdown, no backticks, no explanation:
+{"reply":"answer here","suggestions":["s1","s2","s3","s4"]}
 
 The suggestions must be 4 short follow-up questions in the SAME language as user's message.`
           },
