@@ -1,16 +1,15 @@
-
-
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Mic, MicOff, FileText } from 'lucide-react';
 import API from '../utils/api';
 
 
-const [suggestions, setSuggestions] = useState([
+const SUGGESTIONS = [
   'This month expenses?',
   'What are my savings?',
   'Suggest a budget',
   'Investment tips',
-]);
+  'Generate monthly report',
+];
 
 export default function AiChat() {
   const [open, setOpen] = useState(false);
@@ -66,23 +65,21 @@ export default function AiChat() {
   };
 
   const sendMessage = async (msg) => {
-  const text = msg || input;
-  if (!text.trim()) return;
-  setInput('');
-  setMessages(m => [...m, { role: 'user', text }]);
-  setLoading(true);
-  try {
-    const { data } = await API.post('/ai/chat', { message: text });
-    setMessages(m => [...m, { role: 'ai', text: data.reply }]);
-    if (data.suggestions && data.suggestions.length > 0) {
-      setSuggestions(data.suggestions);
+    const text = msg || input;
+    if (!text.trim()) return;
+    setInput('');
+    setMessages(m => [...m, { role: 'user', text }]);
+    setLoading(true);
+
+    try {
+      const { data } = await API.post('/ai/chat', { message: text });
+      setMessages(m => [...m, { role: 'ai', text: data.reply }]);
+    } catch {
+      setMessages(m => [...m, { role: 'ai', text: '❌ Sorry, kuch error hua. Dobara try karo!' }]);
+    } finally {
+      setLoading(false);
     }
-  } catch {
-    setMessages(m => [...m, { role: 'ai', text: '❌ Sorry, something went wrong. Please try again!' }]);
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   const generateReport = async () => {
     setReportLoading(true);
@@ -221,7 +218,7 @@ export default function AiChat() {
             display: 'flex', gap: 6, overflowX: 'auto',
             scrollbarWidth: 'none'
           }}>
-           {suggestions.map(s => (
+            {SUGGESTIONS.map(s => (
               <button key={s} onClick={() => sendMessage(s)}
                 style={{
                   fontSize: 11, padding: '4px 10px', whiteSpace: 'nowrap',
