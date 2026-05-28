@@ -389,21 +389,4 @@ select.input { cursor: pointer; }
 
 
 
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px;
-}
 
-.menu-icon {
-  background: rgba(255,255,255,0.08);
-  border: none;
-  color: white;
-  padding: 10px;
-  border-radius: 10px;
-}
-
-.menu-icon:hover {
-  background: rgba(255,255,255,0.15);
-}
