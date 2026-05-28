@@ -34,7 +34,15 @@ export default function Sidebar() {
     { to: '/settings', icon: Settings, label: 'Settings' },
   ];
 
-  return (
+ return (
+  <>
+    <button
+      className="menu-btn"
+      onClick={() => setSidebarOpen(!sidebarOpen)}
+    >
+      ☰
+    </button>
+
     <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
       <div className="logo-wrap">
         <div className="logo-icon"><SpendlyLogo /></div>
@@ -43,10 +51,14 @@ export default function Sidebar() {
 
       <nav className="nav-section">
         <div className="nav-label">Menu</div>
+
         {navItems.map(({ to, icon: Icon, label }) => (
           <NavLink
-            key={to} to={to}
-            className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
+            key={to}
+            to={to}
+            className={({ isActive }) =>
+              `nav-item${isActive ? ' active' : ''}`
+            }
           >
             <Icon size={18} />
             {label}
@@ -59,16 +71,26 @@ export default function Sidebar() {
           <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'linear-gradient(135deg, var(--accent), #5b4fcf)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, color: 'white' }}>
             {user?.name?.[0]?.toUpperCase()}
           </div>
+
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.name}</div>
-            <div style={{ fontSize: 11, color: 'var(--text3)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.email}</div>
+            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {user?.name}
+            </div>
+            <div style={{ fontSize: 11, color: 'var(--text3)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {user?.email}
+            </div>
           </div>
         </div>
-        <button className="nav-item btn" style={{ width: '100%', background: 'none', border: 'none', color: 'var(--red2)' }} onClick={handleLogout}>
+
+        <button
+          className="nav-item btn"
+          style={{ width: '100%', background: 'none', border: 'none', color: 'var(--red2)' }}
+          onClick={handleLogout}
+        >
           <LogOut size={16} />
           Logout
         </button>
       </div>
     </aside>
-  );
-}
+  </>
+);}
