@@ -1,4 +1,4 @@
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const fetch = require('node-fetch');
 const express = require('express');
 const router = express.Router();
 const { protect } = require('../middleware/auth');
