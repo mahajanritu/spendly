@@ -80,7 +80,8 @@ User Financial Data:
     res.json({ reply: data.choices[0].message.content });
 
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error('AI Chat Error:', err);
+    res.status(500).json({ message: err.message, stack: err.stack });
   }
 });
 
