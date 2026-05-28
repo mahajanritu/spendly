@@ -1,14 +1,16 @@
+
+
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Mic, MicOff, FileText } from 'lucide-react';
 import API from '../utils/api';
 
-const SUGGESTIONS = [
-  'Is month kitna kharcha hua?',
-  'Meri savings kitni hai?',
-  'Budget suggest karo',
-  'Investment tips do',
-  'Monthly report banao',
-];
+
+const [suggestions, setSuggestions] = useState([
+  'This month expenses?',
+  'What are my savings?',
+  'Suggest a budget',
+  'Investment tips',
+]);
 
 export default function AiChat() {
   const [open, setOpen] = useState(false);
@@ -64,21 +66,23 @@ export default function AiChat() {
   };
 
   const sendMessage = async (msg) => {
-    const text = msg || input;
-    if (!text.trim()) return;
-    setInput('');
-    setMessages(m => [...m, { role: 'user', text }]);
-    setLoading(true);
-
-    try {
-      const { data } = await API.post('/ai/chat', { message: text });
-      setMessages(m => [...m, { role: 'ai', text: data.reply }]);
-    } catch {
-      setMessages(m => [...m, { role: 'ai', text: '❌ Sorry, kuch error hua. Dobara try karo!' }]);
-    } finally {
-      setLoading(false);
+  const text = msg || input;
+  if (!text.trim()) return;
+  setInput('');
+  setMessages(m => [...m, { role: 'user', text }]);
+  setLoading(true);
+  try {
+    const { data } = await API.post('/ai/chat', { message: text });
+    setMessages(m => [...m, { role: 'ai', text: data.reply }]);
+    if (data.suggestions && data.suggestions.length > 0) {
+      setSuggestions(data.suggestions);
     }
-  };
+  } catch {
+    setMessages(m => [...m, { role: 'ai', text: '❌ Sorry, something went wrong. Please try again!' }]);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const generateReport = async () => {
     setReportLoading(true);
@@ -217,7 +221,7 @@ export default function AiChat() {
             display: 'flex', gap: 6, overflowX: 'auto',
             scrollbarWidth: 'none'
           }}>
-            {SUGGESTIONS.map(s => (
+           {suggestions.map(s => (
               <button key={s} onClick={() => sendMessage(s)}
                 style={{
                   fontSize: 11, padding: '4px 10px', whiteSpace: 'nowrap',

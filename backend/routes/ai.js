@@ -4,11 +4,17 @@ const router = express.Router();
 const { protect } = require('../middleware/auth');
 const Expense = require('../models/Expense');
 
+const DEFAULT_SUGGESTIONS = [
+  'This month expenses?',
+  'What are my savings?',
+  'Suggest a budget',
+  'Investment tips',
+];
+
 router.post('/chat', protect, async (req, res) => {
   try {
     const { message } = req.body;
 
-    // User ka poora data lo
     const expenses = await Expense.find({ user: req.user._id })
       .sort({ date: -1 }).limit(100);
 
@@ -22,7 +28,6 @@ router.post('/chat', protect, async (req, res) => {
 
     const balance = totalIncome - totalExpense;
 
-    // Category wise breakdown
     const categoryBreakdown = expenses
       .filter(e => e.type === 'expense')
       .reduce((acc, e) => {
@@ -30,7 +35,7 @@ router.post('/chat', protect, async (req, res) => {
         return acc;
       }, {});
 
-    // Groq API call
+    // Single API call - reply + suggestions both
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -39,20 +44,18 @@ router.post('/chat', protect, async (req, res) => {
       },
       body: JSON.stringify({
         model: 'llama-3.1-8b-instant',
-        max_tokens: 1000,
+        max_tokens: 1200,
         messages: [
           {
             role: 'system',
-            
-content: `You are Spendly AI - a smart personal finance assistant.
+            content: `You are Spendly AI - a smart personal finance assistant.
 
-CRITICAL LANGUAGE RULE: You MUST detect the language of the user's message and reply in EXACTLY the same language.
-- If user writes in Marathi -> reply ONLY in Marathi
-- If user writes in Hindi -> reply ONLY in Hindi  
-- If user writes in English -> reply ONLY in English
-- If user writes in Hinglish -> reply ONLY in Hinglish
-- If user writes in Gujarati -> reply ONLY in Gujarati
-- Never switch languages under any circumstances
+CRITICAL RULES:
+1. ALWAYS detect the language of user's message and reply in EXACTLY that same language
+2. Supported languages: English, Hindi, Marathi, Gujarati, Tamil, Telugu, Kannada, Malayalam, Bengali, Punjabi, Odia, Assamese, Urdu, Sanskrit, Nepali, Sindhi, Kashmiri, Konkani, Maithili, Manipuri, Bodo, Dogri, Santali
+3. Never switch to a different language
+4. Be friendly, helpful and specific with numbers
+5. Give smart budget, savings and investment suggestions
 
 User Financial Data:
 - Name: ${req.user.name}
@@ -61,7 +64,15 @@ User Financial Data:
 - Balance/Savings: Rs.${balance}
 - Category Breakdown: ${JSON.stringify(categoryBreakdown)}
 - Recent Transactions: ${JSON.stringify(expenses.slice(0, 15))}
-- Monthly Budget: Rs.${req.user.monthlyBudget || 'Not set'}`
+- Monthly Budget: Rs.${req.user.monthlyBudget || 'Not set'}
+
+RESPONSE FORMAT - Return ONLY this JSON (no extra text):
+{
+  "reply": "your answer here in user's language",
+  "suggestions": ["suggestion1", "suggestion2", "suggestion3", "suggestion4"]
+}
+
+The suggestions must be 4 short follow-up questions in the SAME language as user's message.`
           },
           {
             role: 'user',
@@ -72,16 +83,35 @@ User Financial Data:
     });
 
     const data = await response.json();
-    
+
     if (data.error) {
       return res.status(500).json({ message: data.error.message });
     }
 
-    res.json({ reply: data.choices[0].message.content });
+    const content = data.choices[0].message.content;
+    
+    // Parse JSON response
+    let reply = content;
+    let suggestions = DEFAULT_SUGGESTIONS;
+    
+    try {
+      // Extract JSON from response
+      const jsonMatch = content.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        const parsed = JSON.parse(jsonMatch[0]);
+        reply = parsed.reply || content;
+        suggestions = parsed.suggestions || DEFAULT_SUGGESTIONS;
+      }
+    } catch (e) {
+      reply = content;
+      suggestions = DEFAULT_SUGGESTIONS;
+    }
+
+    res.json({ reply, suggestions });
 
   } catch (err) {
-    console.error('AI Chat Error:', err);
-    res.status(500).json({ message: err.message, stack: err.stack });
+    console.error('AI Chat Error:', err.message);
+    res.status(500).json({ message: err.message });
   }
 });
 
@@ -124,7 +154,7 @@ router.get('/report', protect, async (req, res) => {
         messages: [
           {
             role: 'system',
-            content: `You are Spendly AI financial advisor. Generate a detailed monthly financial report in a friendly tone. Include:
+            content: `You are Spendly AI financial advisor. Generate a detailed monthly financial report in English. Include:
 1. Monthly Summary
 2. Top spending categories analysis
 3. Savings rate analysis
@@ -132,17 +162,16 @@ router.get('/report', protect, async (req, res) => {
 5. Investment suggestions based on savings
 6. Tips to reduce expenses
 7. Next month goals
-
-Always reply in English. Use emojis. Format nicely with sections.`
+Use emojis. Format nicely with sections.`
           },
           {
             role: 'user',
             content: `Generate my monthly financial report for ${now.toLocaleString('default', { month: 'long' })} ${now.getFullYear()}:
-- Total Income: ₹${totalIncome}
-- Total Expenses: ₹${totalExpense}
-- Balance: ₹${totalIncome - totalExpense}
+- Total Income: Rs.${totalIncome}
+- Total Expenses: Rs.${totalExpense}
+- Balance: Rs.${totalIncome - totalExpense}
 - Category Breakdown: ${JSON.stringify(categoryBreakdown)}
-- Monthly Budget: ₹${req.user.monthlyBudget || 'Not set'}
+- Monthly Budget: Rs.${req.user.monthlyBudget || 'Not set'}
 - Transactions count: ${expenses.length}`
           }
         ]
@@ -150,7 +179,7 @@ Always reply in English. Use emojis. Format nicely with sections.`
     });
 
     const data = await response.json();
-    res.json({ 
+    res.json({
       report: data.choices[0].message.content,
       stats: { totalIncome, totalExpense, balance: totalIncome - totalExpense, categoryBreakdown }
     });
