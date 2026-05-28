@@ -15,7 +15,7 @@ export default function AiChat() {
   const [messages, setMessages] = useState([
     {
       role: 'ai',
-      text: '👋 Hi! Main Spendly AI hoon!\n\nMujhse koi bhi language mein poochho:\n• 💰 Expense analysis\n• 📊 Budget suggestions\n• 📈 Investment tips\n• 📋 Monthly report\n\nMic button se voice mein bhi poochh sakte ho! 🎤'
+      text: "👋 Hi! I'm Spendly AI — your personal finance assistant!\n\nAsk me anything about your finances:\n• 💰 Expense analysis\n• 📊 Budget suggestions\n• 📈 Investment tips\n• 📋 Monthly report\n\nI'll reply in whatever language you write in! 🌐"
     }
   ]);
   const [input, setInput] = useState('');
