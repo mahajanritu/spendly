@@ -1,6 +1,8 @@
+
 const fetch = require('node-fetch');
 const express = require('express');
 const router = express.Router();
+
 const { protect } = require('../middleware/auth');
 const Expense = require('../models/Expense');
 
@@ -15,80 +17,110 @@ router.post('/chat', protect, async (req, res) => {
   try {
     const { message } = req.body;
 
-    // Fetch user expenses
-    const expenses = await Expense.find({ user: req.user._id })
+    if (!message) {
+      return res.status(400).json({
+        reply: 'Message is required'
+      });
+    }
+
+    // =========================
+    // LANGUAGE DETECTION
+    // =========================
+
+    const isEnglish = /^[A-Za-z0-9\s!?.,₹$&()\-]+$/.test(message);
+
+    const replyLanguage = isEnglish
+      ? 'English'
+      : 'Same language as user';
+
+    // =========================
+    // USER FINANCIAL DATA
+    // =========================
+
+    const expenses = await Expense.find({
+      user: req.user._id
+    })
       .sort({ date: -1 })
       .limit(100);
 
-    // Calculate totals
     const totalExpense = expenses
-      .filter(e => e.type === 'expense')
-      .reduce((sum, e) => sum + e.amount, 0);
+      .filter(item => item.type === 'expense')
+      .reduce((sum, item) => sum + item.amount, 0);
 
     const totalIncome = expenses
-      .filter(e => e.type === 'income')
-      .reduce((sum, e) => sum + e.amount, 0);
+      .filter(item => item.type === 'income')
+      .reduce((sum, item) => sum + item.amount, 0);
 
     const balance = totalIncome - totalExpense;
 
-    // Category breakdown
     const categoryBreakdown = expenses
-      .filter(e => e.type === 'expense')
-      .reduce((acc, e) => {
-        acc[e.category] = (acc[e.category] || 0) + e.amount;
+      .filter(item => item.type === 'expense')
+      .reduce((acc, item) => {
+        acc[item.category] =
+          (acc[item.category] || 0) + item.amount;
+
         return acc;
       }, {});
 
-    // AI API Call
+    // =========================
+    // GROQ AI API
+    // =========================
+
     const response = await fetch(
       'https://api.groq.com/openai/v1/chat/completions',
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
+          Authorization: `Bearer ${process.env.GROQ_API_KEY}`
         },
         body: JSON.stringify({
           model: 'llama-3.1-8b-instant',
-          temperature: 0.7,
+          temperature: 0.5,
           max_tokens: 700,
+
           messages: [
             {
               role: 'system',
+
               content: `
-You are Spendly AI, a smart personal finance assistant.
+You are Spendly AI, a smart and professional personal finance assistant.
 
 STRICT RULES:
-- Reply in the EXACT SAME language as user's message
-- Never mix languages
+- Reply language: ${replyLanguage}
+- Never mix multiple languages
 - Never return JSON
-- Never return code blocks
-- Never use markdown formatting
-- Keep replies short, friendly and professional
-- Use ₹ symbol for money
-- Sound natural like a real assistant
+- Never return code
+- Never use markdown
+- Keep replies short and clean
+- Use ₹ symbol for currency
+- Sound friendly and human
+- Give accurate finance advice
 
-User Financial Data:
+USER DATA:
 - Name: ${req.user.name}
 - Total Income: ₹${totalIncome}
 - Total Expenses: ₹${totalExpense}
-- Balance/Savings: ₹${balance}
-- Monthly Budget: ₹${req.user.monthlyBudget || 'Not set'}
-- Category Breakdown: ${JSON.stringify(categoryBreakdown)}
+- Current Savings: ₹${balance}
+- Monthly Budget: ₹${req.user.monthlyBudget || 0}
 
-Recent Transactions:
+CATEGORY BREAKDOWN:
+${JSON.stringify(categoryBreakdown)}
+
+RECENT TRANSACTIONS:
 ${JSON.stringify(expenses.slice(0, 10))}
 
 If user asks:
-- expenses → answer expense summary
-- savings → answer savings amount
+- expenses → tell expenses
+- savings → tell savings
 - budget → give budgeting advice
-- investment → give beginner-friendly investment tips
-- report → summarize financial report
+- investment → give investment tips
+- report → summarize monthly finance report
 
 Reply ONLY with plain text.
 `
             },
+
             {
               role: 'user',
               content: message
@@ -100,22 +132,32 @@ Reply ONLY with plain text.
 
     const data = await response.json();
 
+    // =========================
+    // ERROR HANDLING
+    // =========================
+
     if (data.error) {
       return res.status(500).json({
-        message: data.error.message
+        reply: data.error.message
       });
     }
 
-    // Clean AI response
+    // =========================
+    // CLEAN RESPONSE
+    // =========================
+
     let reply =
-      data?.choices?.[0]?.message?.content?.trim() ||
+      data?.choices?.[0]?.message?.content ||
       'Sorry, I could not understand that.';
 
-    // Remove unwanted formatting
     reply = reply
       .replace(/```/g, '')
       .replace(/json/gi, '')
       .trim();
+
+    // =========================
+    // SEND RESPONSE
+    // =========================
 
     res.json({
       reply,
@@ -131,7 +173,12 @@ Reply ONLY with plain text.
   }
 });
 
-// Monthly Report Route
+
+
+// =======================================
+// MONTHLY REPORT ROUTE
+// =======================================
+
 router.get('/report', protect, async (req, res) => {
   try {
     const now = new Date();
@@ -157,19 +204,21 @@ router.get('/report', protect, async (req, res) => {
     });
 
     const totalExpense = expenses
-      .filter(e => e.type === 'expense')
-      .reduce((sum, e) => sum + e.amount, 0);
+      .filter(item => item.type === 'expense')
+      .reduce((sum, item) => sum + item.amount, 0);
 
     const totalIncome = expenses
-      .filter(e => e.type === 'income')
-      .reduce((sum, e) => sum + e.amount, 0);
+      .filter(item => item.type === 'income')
+      .reduce((sum, item) => sum + item.amount, 0);
 
     const balance = totalIncome - totalExpense;
 
     const categoryBreakdown = expenses
-      .filter(e => e.type === 'expense')
-      .reduce((acc, e) => {
-        acc[e.category] = (acc[e.category] || 0) + e.amount;
+      .filter(item => item.type === 'expense')
+      .reduce((acc, item) => {
+        acc[item.category] =
+          (acc[item.category] || 0) + item.amount;
+
         return acc;
       }, {});
 
@@ -179,42 +228,48 @@ router.get('/report', protect, async (req, res) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
+          Authorization: `Bearer ${process.env.GROQ_API_KEY}`
         },
+
         body: JSON.stringify({
           model: 'llama-3.1-8b-instant',
-          temperature: 0.7,
+          temperature: 0.6,
           max_tokens: 1200,
+
           messages: [
             {
               role: 'system',
+
               content: `
-You are Spendly AI financial advisor.
+You are Spendly AI Financial Advisor.
 
-Generate a clean monthly financial report.
+Generate a professional monthly financial report.
 
-Rules:
+RULES:
 - Use simple English
 - Use emojis naturally
-- Keep formatting clean
 - No markdown tables
 - No JSON
+- Keep formatting clean
 
 Include:
 1. Monthly Summary
-2. Top Expenses
+2. Expense Analysis
 3. Savings Analysis
-4. Budget Advice
+4. Budget Suggestions
 5. Investment Tips
 6. Financial Goals
 `
             },
+
             {
               role: 'user',
+
               content: `
 Generate my monthly report.
 
-Month: ${now.toLocaleString('default', {
+Month:
+${now.toLocaleString('default', {
   month: 'long'
 })} ${now.getFullYear()}
 
@@ -222,7 +277,7 @@ Financial Data:
 - Total Income: ₹${totalIncome}
 - Total Expenses: ₹${totalExpense}
 - Savings: ₹${balance}
-- Monthly Budget: ₹${req.user.monthlyBudget || 'Not set'}
+- Monthly Budget: ₹${req.user.monthlyBudget || 0}
 - Category Breakdown: ${JSON.stringify(categoryBreakdown)}
 `
             }
@@ -234,7 +289,7 @@ Financial Data:
     const data = await response.json();
 
     let report =
-      data?.choices?.[0]?.message?.content?.trim() ||
+      data?.choices?.[0]?.message?.content ||
       'Unable to generate report.';
 
     report = report
@@ -244,6 +299,7 @@ Financial Data:
 
     res.json({
       report,
+
       stats: {
         totalIncome,
         totalExpense,
