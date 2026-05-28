@@ -1,4 +1,6 @@
 import React from 'react';
+import { useState } from "react";
+
 import { NavLink, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, ArrowLeftRight, PieChart, Settings, LogOut, Wallet } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
@@ -13,8 +15,11 @@ const SpendlyLogo = () => (
 );
 
 export default function Sidebar() {
+  
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -30,7 +35,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
       <div className="logo-wrap">
         <div className="logo-icon"><SpendlyLogo /></div>
         <span className="logo-text">Spendly</span>
