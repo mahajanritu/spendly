@@ -225,8 +225,14 @@ export default function AiChat() {
             position: 'fixed',
             bottom: 96,
             right: 24,
-            width: 360,
-            height: 520,
+
+            left: window.innerWidth < 768 ? '50%' : 'auto',
+            transform: window.innerWidth < 768 ? 'translateX(-50%)' : 'none',
+            
+            width: window.innerWidth < 768 ? '95%' : 360,
+            height: window.innerWidth < 768 ? '90vh' : 520,
+            maxWidth: 360,
+            
             background: 'var(--card)',
             border: '1px solid var(--border2)',
             borderRadius: 20,
