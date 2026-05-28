@@ -1,3 +1,5 @@
+import AiChat from './components/AiChat';
+
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
@@ -17,6 +19,7 @@ const AppLayout = ({ children }) => (
   <div className="app-layout">
     <Sidebar />
     <main className="main-content">{children}</main>
+    <AiChat />
   </div>
 );
 
