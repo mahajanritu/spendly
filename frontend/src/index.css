@@ -385,3 +385,31 @@ select.input { cursor: pointer; }
   .main-content { margin-left: 0; padding: 20px; }
   .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
 }
+
+/* Mobile Header */
+.mobile-header {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 56px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 100;
+}
+
+.mobile-sidebar-drawer {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .mobile-header { display: flex; }
+  .sidebar { display: none !important; }
+  .mobile-sidebar-drawer { display: flex !important; }
+  .main-content { 
+    margin-left: 0 !important; 
+    padding-top: 72px !important; 
+  }
+}
