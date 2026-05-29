@@ -15,6 +15,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import './index.css';
 
+import GoogleCallback from './pages/GoogleCallback';
+
 const AppLayout = ({ children }) => (
   <div className="app-layout">
     <Sidebar />
@@ -51,6 +53,8 @@ export default function App() {
           <Route path="/settings" element={<ProtectedRoute><AppLayout><Settings /></AppLayout></ProtectedRoute>} />
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
+
+          <Route path="/auth/callback" element={<GoogleCallback />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

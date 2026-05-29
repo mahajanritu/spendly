@@ -74,6 +74,22 @@ export default function Register() {
           </button>
         </form>
 
+        <div style={{ margin: '16px 0', textAlign: 'center', color: 'var(--text3)', fontSize: 13 }}>or</div>
+
+        <a href="https://spendly-production-1721.up.railway.app/api/google/login"
+          style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+            width: '100%', padding: '12px',
+            background: 'white', color: '#333',
+            borderRadius: 10, border: '1px solid #ddd',
+            fontSize: 14, fontWeight: 600, cursor: 'pointer',
+            textDecoration: 'none', marginBottom: 16,
+            fontFamily: 'Sora, sans-serif'
+          }}>
+          <img src="https://www.google.com/favicon.ico" width="18" height="18" alt="Google" />
+          Continue with Google
+        </a>
+
         <div className="auth-footer">
           Already have an account? <span className="auth-link" onClick={() => navigate('/login')}>Sign in</span>
         </div>

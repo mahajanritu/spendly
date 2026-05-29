@@ -60,6 +60,26 @@ export default function Login() {
           </button>
         </form>
 
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, margin: '16px 0' }}>
+          <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
+          <span style={{ fontSize: 12, color: 'var(--text3)' }}>or</span>
+          <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
+        </div>
+
+        <a href="https://spendly-production-1721.up.railway.app/api/google/login"
+          style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+            width: '100%', padding: '12px',
+            background: 'white', color: '#333',
+            borderRadius: 10, border: '1px solid #ddd',
+            fontSize: 14, fontWeight: 600, cursor: 'pointer',
+            textDecoration: 'none', marginBottom: 16,
+            fontFamily: 'Sora, sans-serif'
+          }}>
+          <img src="https://www.google.com/favicon.ico" width="18" height="18" alt="Google" />
+          Continue with Google
+        </a>
+
         <div className="auth-footer">
           Don't have an account? <span className="auth-link" onClick={() => navigate('/register')}>Create one</span>
         </div>

@@ -3,6 +3,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 
+const passport = require('passport');
+
 dotenv.config();
 connectDB();
 
@@ -19,6 +21,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/expenses', require('./routes/expenses'));
 app.use('/api/ai', require('./routes/ai'));
+
+app.use(passport.initialize());
+app.use('/api/google', require('./routes/google-auth'));
 
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'OK', message: 'Spendly API Running 🚀' }));
