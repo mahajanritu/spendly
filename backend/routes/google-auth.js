@@ -5,6 +5,11 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
+if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+  console.log('Google OAuth not configured');
+  module.exports = require('express').Router();
+  return;
+}
 // Google Strategy setup
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
