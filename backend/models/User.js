@@ -8,6 +8,11 @@ const userSchema = new mongoose.Schema({
   currency: { type: String, default: 'INR' },
   monthlyBudget: { type: Number, default: 0 },
   googleId: { type: String },
+
+  resetPasswordToken: { type: String },
+  resetPasswordExpire: { type: Date },
+  isEmailVerified: { type: Boolean, default: false },
+  emailVerifyToken: { type: String },
   createdAt: { type: Date, default: Date.now }
 });
 
