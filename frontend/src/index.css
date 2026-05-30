@@ -413,3 +413,11 @@ select.input { cursor: pointer; }
     padding-top: 72px !important; 
   }
 }
+
+
+.auth-logo-icon img {
+  width: 72px !important;
+  height: 72px !important;
+  border-radius: 16px !important;
+  object-fit: contain !important;
+}
