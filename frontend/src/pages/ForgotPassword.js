@@ -3,13 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import API from '../utils/api';
 import toast from 'react-hot-toast';
 
-const SpendlyLogo = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="rgba(255,255,255,0.2)"/>
-    <path d="M12 6v2M12 16v2M8 12h8" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-    <circle cx="12" cy="12" r="3" fill="white"/>
-  </svg>
-);
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -37,7 +30,7 @@ export default function ForgotPassword() {
       <div className="auth-bg-blob" />
       <div className="auth-card">
         <div className="auth-logo">
-          <div className="auth-logo-icon"><SpendlyLogo /></div>
+          <img src="/spendly_logo.jpg" alt="Spendly" style={{ width: 90, height: 90, borderRadius: 22, objectFit: 'contain', marginBottom: 16 }} />
           <div className="auth-title">Forgot Password</div>
           <div className="auth-subtitle">
             {sent ? 'Check your email for reset link' : 'Enter your email to reset password'}
