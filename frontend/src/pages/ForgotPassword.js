@@ -4,11 +4,7 @@ import API from '../utils/api';
 import toast from 'react-hot-toast';
 
 const SpendlyLogo = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="rgba(255,255,255,0.2)"/>
-    <path d="M12 6v2M12 16v2M8 12h8" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-    <circle cx="12" cy="12" r="3" fill="white"/>
-  </svg>
+  <img src="/spendly_logo.png" alt="Spendly" width="32" height="32" style={{ borderRadius: 10 }} />
 );
 
 export default function ForgotPassword() {
