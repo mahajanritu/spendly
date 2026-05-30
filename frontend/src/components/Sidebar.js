@@ -4,9 +4,9 @@ import { LayoutDashboard, ArrowLeftRight, PieChart, Settings, LogOut, Menu, X } 
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 
-const SpendlyLogo = () => (
-  <img src="/spendly_logo.jpg" alt="Spendly" width="72" height="72" style={{ borderRadius: 16, objectFit: 'contain' }} />
-);
+// const SpendlyLogo = () => (
+//   <img src="/spendly_logo.jpg" alt="Spendly" width="72" height="72" style={{ borderRadius: 16, objectFit: 'contain' }} />
+// );
 
 export default function Sidebar() {
   const { user, logout } = useAuth();
@@ -67,7 +67,7 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Mobile Top Header */}
+      {/* Mobile Top Header
       <div className="mobile-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div className="logo-icon" style={{ width: 34, height: 34, borderRadius: 10 }}>
@@ -79,7 +79,40 @@ export default function Sidebar() {
           style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text)', padding: 6 }}>
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
-      </div>
+      </div> */}
+
+      <div className="mobile-header">
+  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+    <img
+      src="/spendly_logo.jpg"
+      alt="Spendly"
+      style={{
+        width: 32,
+        height: 32,
+        borderRadius: 8,
+        objectFit: 'cover'
+      }}
+    />
+
+    {/* Agar logo image me hi Spendly likha hai to niche wali line hata do */}
+    <span className="logo-text" style={{ fontSize: 18 }}>
+      Spendly
+    </span>
+  </div>
+
+  <button
+    onClick={() => setMobileOpen(!mobileOpen)}
+    style={{
+      background: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      color: 'var(--text)',
+      padding: 6
+    }}
+  >
+    {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+  </button>
+</div>
 
       {/* Desktop Sidebar */}
       <aside className="sidebar">
