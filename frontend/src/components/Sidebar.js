@@ -32,7 +32,8 @@ export default function Sidebar() {
         <div className="auth-logo-icon" style={{ background: 'none', boxShadow: 'none', width: 72, height: 72 }}>
   <SpendlyLogo />
 </div>
-        <span className="logo-text">Spendly</span>
+<img src="/spendly_logo.jpg" alt="Spendly" style={{ width: 72, height: 72, borderRadius: 16, objectFit: 'contain' }} />
+        {/* <span className="logo-text">Spendly</span> */}
       </div>
       <nav className="nav-section">
         <div className="nav-label">Menu</div>
