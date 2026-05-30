@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 
 const SpendlyLogo = () => (
-  <img src="/spendly_logo.png" alt="Spendly" width="48" height="48" style={{ borderRadius: 12, objectFit: 'cover' }} />
+  <img src="/spendly_logo.png" alt="Spendly" width="72" height="72" style={{ borderRadius: 16, objectFit: 'contain' }} />
 );
 
 export default function Register() {
@@ -37,7 +37,9 @@ export default function Register() {
 
       <div className="auth-card">
         <div className="auth-logo">
-          <div className="auth-logo-icon"><SpendlyLogo /></div>
+          <div className="auth-logo-icon" style={{ background: 'none', boxShadow: 'none', width: 72, height: 72 }}>
+  <SpendlyLogo />
+</div>
           <div className="auth-title">Create account</div>
           <div className="auth-subtitle">Start tracking your finances with Spendly</div>
         </div>
