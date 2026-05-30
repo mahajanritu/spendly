@@ -4,9 +4,13 @@ import { LayoutDashboard, ArrowLeftRight, PieChart, Settings, LogOut, Menu, X } 
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 
-// const SpendlyLogo = () => (
-//   <img src="/spendly_logo.jpg" alt="Spendly" width="72" height="72" style={{ borderRadius: 16, objectFit: 'contain' }} />
-// );
+const SpendlyLogo = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="rgba(255,255,255,0.2)"/>
+    <path d="M12 6v2M12 16v2M8 12h8M9.5 9.5l1 1M13.5 13.5l1 1" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+    <circle cx="12" cy="12" r="3" fill="white"/>
+  </svg>
+);
 
 export default function Sidebar() {
   const { user, logout } = useAuth();
@@ -29,10 +33,8 @@ export default function Sidebar() {
   const navContent = (
     <>
       <div className="logo-wrap">
-        <div className="auth-logo-icon" style={{ background: 'none', boxShadow: 'none', width: 72, height: 72 }}>
-  <SpendlyLogo />
-</div>
-        {/* <span className="logo-text">Spendly</span> */}
+        <div className="logo-icon"><SpendlyLogo /></div>
+        <span className="logo-text">Spendly</span>
       </div>
       <nav className="nav-section">
         <div className="nav-label">Menu</div>
@@ -67,7 +69,7 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Mobile Top Header
+      {/* Mobile Top Header */}
       <div className="mobile-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div className="logo-icon" style={{ width: 34, height: 34, borderRadius: 10 }}>
@@ -79,40 +81,7 @@ export default function Sidebar() {
           style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text)', padding: 6 }}>
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
-      </div> */}
-
-      <div className="mobile-header">
-  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-    <img
-      src="/spendly_logo.jpg"
-      alt="Spendly"
-      style={{
-        width: 32,
-        height: 32,
-        borderRadius: 8,
-        objectFit: 'cover'
-      }}
-    />
-
-    {/* Agar logo image me hi Spendly likha hai to niche wali line hata do */}
-    <span className="logo-text" style={{ fontSize: 18 }}>
-      Spendly
-    </span>
-  </div>
-
-  <button
-    onClick={() => setMobileOpen(!mobileOpen)}
-    style={{
-      background: 'none',
-      border: 'none',
-      cursor: 'pointer',
-      color: 'var(--text)',
-      padding: 6
-    }}
-  >
-    {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-  </button>
-</div>
+      </div>
 
       {/* Desktop Sidebar */}
       <aside className="sidebar">

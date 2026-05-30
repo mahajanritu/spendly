@@ -8,8 +8,6 @@ import TransactionModal, { CATEGORY_EMOJI } from '../components/TransactionModal
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 
-import { generatePDF } from '../utils/generatePDF';
-
 const fmt = (n) => '₹' + (n || 0).toLocaleString('en-IN', { maximumFractionDigits: 0 });
 
 const CustomTooltip = ({ active, payload, label }) => {
@@ -85,14 +83,9 @@ export default function Dashboard() {
           <h1 className="page-title">Good {new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 17 ? 'afternoon' : 'evening'}, {user?.name?.split(' ')[0]} 👋</h1>
           <p className="page-subtitle">{format(new Date(), 'EEEE, MMMM d yyyy')}</p>
         </div>
-        <div style={{ display: 'flex', gap: 10 }}>
-  <button className="btn btn-ghost" onClick={() => generatePDF(user, stats, recent)}>
-    📄 Download PDF
-  </button>
-  <button className="btn btn-primary" onClick={() => setShowModal(true)}>
-    <Plus size={16} /> Add Transaction
-  </button>
-</div>
+        <button className="btn btn-primary" onClick={() => setShowModal(true)}>
+          <Plus size={16} /> Add Transaction
+        </button>
       </div>
 
       {/* Stats */}
