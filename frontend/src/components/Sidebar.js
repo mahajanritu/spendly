@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 
 const SpendlyLogo = () => (
-  <img src="/spendly_logo.png" alt="Spendly" width="72" height="72" style={{ borderRadius: 16, objectFit: 'contain' }} />
+  <img src="/spendly_logo.jpg" alt="Spendly" width="72" height="72" style={{ borderRadius: 16, objectFit: 'contain' }} />
 );
 
 export default function Sidebar() {
@@ -32,8 +32,7 @@ export default function Sidebar() {
         <div className="auth-logo-icon" style={{ background: 'none', boxShadow: 'none', width: 72, height: 72 }}>
   <SpendlyLogo />
 </div>
-<img src="/spendly_logo.jpg" alt="Spendly" style={{ width: 72, height: 72, borderRadius: 16, objectFit: 'contain' }} />
-        {/* <span className="logo-text">Spendly</span> */}
+        <span className="logo-text">Spendly</span>
       </div>
       <nav className="nav-section">
         <div className="nav-label">Menu</div>
