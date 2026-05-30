@@ -30,7 +30,7 @@ export default function ForgotPassword() {
       <div className="auth-bg-blob" />
       <div className="auth-card">
         <div className="auth-logo">
-          <img src="/spendly_logo.png" alt="Spendly" style={{ width: 90, height: 90, borderRadius: 22, objectFit: 'contain', marginBottom: 16 }} />
+          <img src="/spendly_logo.jpg" alt="Spendly" style={{ width: 90, height: 90, borderRadius: 22, objectFit: 'contain', marginBottom: 16 }} />
           <div className="auth-title">Forgot Password</div>
           <div className="auth-subtitle">
             {sent ? 'Check your email for reset link' : 'Enter your email to reset password'}

@@ -4,14 +4,14 @@
   "description": "Track your expenses, income and savings smartly",
  "icons": [
   {
-    "src": "spendly_logo.png",
+    "src": "spendly_logo.jpg",
     "sizes": "192x192",
-    "type": "image/png"
+    "type": "image/jpeg"
   },
   {
-    "src": "spendly_logo.png",
+    "src": "spendly_logo.jpg",
     "sizes": "512x512",
-    "type": "image/png"
+    "type": "image/jpeg"
   }
 ],
   "start_url": ".",

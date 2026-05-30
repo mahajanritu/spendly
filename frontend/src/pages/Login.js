@@ -33,7 +33,7 @@ export default function Login() {
 
       <div className="auth-card">
         <div className="auth-logo">
-        <img src="/spendly_logo.png" alt="Spendly" style={{ width: 90, height: 90, borderRadius: 22, objectFit: 'contain', marginBottom: 16 }} />
+        <img src="/spendly_logo.jpg" alt="Spendly" style={{ width: 90, height: 90, borderRadius: 22, objectFit: 'contain', marginBottom: 16 }} />
         <div className="auth-title">Welcome back</div>
         <div className="auth-subtitle">Sign in to your Spendly account</div>
       </div>

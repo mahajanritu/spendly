@@ -33,7 +33,7 @@ export default function ResetPassword() {
       <div className="auth-bg-blob" />
       <div className="auth-card">
         <div className="auth-logo">
-          <img src="/spendly_logo.png" alt="Spendly" style={{ width: 90, height: 90, borderRadius: 22, objectFit: 'contain', marginBottom: 16 }} />
+          <img src="/spendly_logo.jpg" alt="Spendly" style={{ width: 90, height: 90, borderRadius: 22, objectFit: 'contain', marginBottom: 16 }} />
           <div className="auth-title">Reset Password</div>
           <div className="auth-subtitle">Enter your new password</div>
         </div>
