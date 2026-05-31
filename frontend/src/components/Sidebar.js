@@ -4,14 +4,6 @@ import { LayoutDashboard, ArrowLeftRight, PieChart, Settings, LogOut, Menu, X } 
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 
-const SpendlyLogo = () => (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="rgba(255,255,255,0.2)"/>
-    <path d="M12 6v2M12 16v2M8 12h8M9.5 9.5l1 1M13.5 13.5l1 1" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
-    <circle cx="12" cy="12" r="3" fill="white"/>
-  </svg>
-);
-
 export default function Sidebar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -32,10 +24,12 @@ export default function Sidebar() {
 
   const navContent = (
     <>
+      {/* Desktop Logo — image + Spendly text */}
       <div className="logo-wrap">
-        <div className="logo-icon"><SpendlyLogo /></div>
+        <img src="/logo.jpg" alt="Spendly" style={{ width: 36, height: 36, borderRadius: 10, objectFit: 'cover' }} />
         <span className="logo-text">Spendly</span>
       </div>
+
       <nav className="nav-section">
         <div className="nav-label">Menu</div>
         {navItems.map(({ to, icon: Icon, label }) => (
@@ -49,6 +43,7 @@ export default function Sidebar() {
           </NavLink>
         ))}
       </nav>
+
       <div className="nav-bottom">
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 8px', marginBottom: 8 }}>
           <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'linear-gradient(135deg, var(--accent), #5b4fcf)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, color: 'white' }}>
@@ -69,13 +64,10 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Mobile Top Header */}
+      {/* Mobile Top Header — sirf logo, Spendly text nahi */}
       <div className="mobile-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div className="logo-icon" style={{ width: 34, height: 34, borderRadius: 10 }}>
-            <SpendlyLogo />
-          </div>
-          <span className="logo-text" style={{ fontSize: 20 }}>Spendly</span>
+          <img src="/logo.jpg" alt="Spendly" style={{ width: 36, height: 36, borderRadius: 10, objectFit: 'cover' }} />
         </div>
         <button onClick={() => setMobileOpen(!mobileOpen)}
           style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text)', padding: 6 }}>
