@@ -3,8 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import API from '../utils/api';
 import toast from 'react-hot-toast';
 
-
-
 export default function ResetPassword() {
   const [form, setForm] = useState({ password: '', confirm: '' });
   const [loading, setLoading] = useState(false);
@@ -33,7 +31,9 @@ export default function ResetPassword() {
       <div className="auth-bg-blob" />
       <div className="auth-card">
         <div className="auth-logo">
-          <img src="/spendly_logo.jpg" alt="Spendly" style={{ width: 90, height: 90, borderRadius: 22, objectFit: 'contain', marginBottom: 16 }} />
+          <div className="auth-logo-icon" style={{ background: 'none', boxShadow: 'none', padding: 0 }}>
+            <img src="/logo.jpg" alt="Spendly" style={{ width: 56, height: 56, borderRadius: 16, objectFit: 'cover' }} />
+          </div>
           <div className="auth-title">Reset Password</div>
           <div className="auth-subtitle">Enter your new password</div>
         </div>

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import API from '../utils/api';
 import toast from 'react-hot-toast';
 
-
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
@@ -30,7 +29,9 @@ export default function ForgotPassword() {
       <div className="auth-bg-blob" />
       <div className="auth-card">
         <div className="auth-logo">
-          <img src="/spendly_logo.jpg" alt="Spendly" style={{ width: 90, height: 90, borderRadius: 22, objectFit: 'contain', marginBottom: 16 }} />
+          <div className="auth-logo-icon" style={{ background: 'none', boxShadow: 'none', padding: 0 }}>
+            <img src="/logo.jpg" alt="Spendly" style={{ width: 56, height: 56, borderRadius: 16, objectFit: 'cover' }} />
+          </div>
           <div className="auth-title">Forgot Password</div>
           <div className="auth-subtitle">
             {sent ? 'Check your email for reset link' : 'Enter your email to reset password'}
@@ -43,11 +44,8 @@ export default function ForgotPassword() {
             <p style={{ color: 'var(--text2)', fontSize: 14, marginBottom: 24, lineHeight: 1.6 }}>
               We sent a password reset link to <strong>{email}</strong>. Check your inbox and click the link to reset your password.
             </p>
-            <p style={{ color: 'var(--text3)', fontSize: 12, marginBottom: 24 }}>
-              Link expires in 15 minutes
-            </p>
-            <button className="btn btn-ghost" style={{ width: '100%', justifyContent: 'center' }}
-              onClick={() => navigate('/login')}>
+            <p style={{ color: 'var(--text3)', fontSize: 12, marginBottom: 24 }}>Link expires in 15 minutes</p>
+            <button className="btn btn-ghost" style={{ width: '100%', justifyContent: 'center' }} onClick={() => navigate('/login')}>
               Back to Login
             </button>
           </div>

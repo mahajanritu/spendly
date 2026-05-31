@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 
-
-
 export default function Register() {
   const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' });
   const [loading, setLoading] = useState(false);
@@ -35,8 +33,9 @@ export default function Register() {
 
       <div className="auth-card">
         <div className="auth-logo">
-           <img src="/spendly_logo.jpg" alt="Spendly" style={{ width: 90, height: 90, borderRadius: 22, objectFit: 'contain', marginBottom: 16 }} />
-  
+          <div className="auth-logo-icon" style={{ background: 'none', boxShadow: 'none', padding: 0 }}>
+            <img src="/logo.jpg" alt="Spendly" style={{ width: 56, height: 56, borderRadius: 16, objectFit: 'cover' }} />
+          </div>
           <div className="auth-title">Create account</div>
           <div className="auth-subtitle">Start tracking your finances with Spendly</div>
         </div>
@@ -69,7 +68,11 @@ export default function Register() {
           </button>
         </form>
 
-        <div style={{ margin: '16px 0', textAlign: 'center', color: 'var(--text3)', fontSize: 13 }}>or</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, margin: '16px 0' }}>
+          <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
+          <span style={{ fontSize: 12, color: 'var(--text3)' }}>or</span>
+          <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
+        </div>
 
         <a href="https://spendly-production-1721.up.railway.app/api/google/login"
           style={{

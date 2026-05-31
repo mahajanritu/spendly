@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 
-
-
 export default function Login() {
   const [form, setForm] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
@@ -33,10 +31,12 @@ export default function Login() {
 
       <div className="auth-card">
         <div className="auth-logo">
-        <img src="/spendly_logo.jpg" alt="Spendly" style={{ width: 90, height: 90, borderRadius: 22, objectFit: 'contain', marginBottom: 16 }} />
-        <div className="auth-title">Welcome back</div>
-        <div className="auth-subtitle">Sign in to your Spendly account</div>
-      </div>
+          <div className="auth-logo-icon" style={{ background: 'none', boxShadow: 'none', padding: 0 }}>
+            <img src="/logo.jpg" alt="Spendly" style={{ width: 56, height: 56, borderRadius: 16, objectFit: 'cover' }} />
+          </div>
+          <div className="auth-title">Welcome back</div>
+          <div className="auth-subtitle">Sign in to your Spendly account</div>
+        </div>
 
         <form onSubmit={handleSubmit}>
           <div className="input-group">
@@ -50,14 +50,10 @@ export default function Login() {
               onChange={e => setForm(f => ({ ...f, password: e.target.value }))} />
           </div>
           <div style={{ textAlign: 'right', marginTop: -8, marginBottom: 12 }}>
-          <span className="auth-link" style={{ fontSize: 12 }}
-           onClick={() => navigate('/forgot-password')}>
-          Forgot Password?
-          </span>
+            <span className="auth-link" style={{ fontSize: 12 }} onClick={() => navigate('/forgot-password')}>
+              Forgot Password?
+            </span>
           </div>
-
-
-
           <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', padding: '13px', marginTop: 8 }} disabled={loading}>
             {loading ? 'Signing in...' : 'Sign In →'}
           </button>
