@@ -241,15 +241,18 @@ npm start
 ## 📡 API Endpoints
 
 ### 🔐 Authentication
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| `POST` | `/api/auth/register` | Register new user | ❌ |
-| `POST` | `/api/auth/login` | Login user | ❌ |
-| `GET` | `/api/auth/me` | Get current user | ✅ |
-| `PUT` | `/api/auth/profile` | Update profile & budget | ✅ |
-| `POST` | `/api/auth/forgot-password` | Send reset email | ❌ |
-| `POST` | `/api/auth/reset-password/:token` | Reset password | ❌ |
-| `GET` | `/api/google/login` | Google OAuth login | ❌ |
+
+| Method | Endpoint | Description | Status |
+|--------|-----------|-------------|---------|
+| POST | `/api/auth/register` | Register new user | ✅ Completed |
+| POST | `/api/auth/login` | Login user | ✅ Completed |
+| GET | `/api/auth/me` | Get current user | ✅ Completed |
+| PUT | `/api/auth/profile` | Update profile & budget | ✅ Completed |
+| POST | `/api/auth/forgot-password` | Send reset email | ✅ Completed |
+| POST | `/api/auth/reset-password/:token` | Reset password | ✅ Completed |
+| GET | `/api/google/login` | Google OAuth login | ✅ Completed |
+
+
 
 ### 💸 Expenses & Income
 | Method | Endpoint | Description | Auth Required |
