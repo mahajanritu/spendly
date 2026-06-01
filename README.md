@@ -253,7 +253,6 @@ npm start
 | POST | `/api/auth/reset-password/:token` | Reset password | ✅ Completed |
 | GET | `/api/google/login` | Google OAuth login | ✅ Completed |
 
-
 ### 💸 Expenses & Income
 | Method | Endpoint | Description | Auth Required |
 |--------|----------|-------------|---------------|
