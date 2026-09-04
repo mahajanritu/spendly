@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'https://spendly-production-1721.up.railway.app/api',
+  baseURL: process.env.REACT_APP_API_URL || 'https://spendly-ib4j.onrender.com/api',
 });
 
 API.interceptors.request.use((config) => {
