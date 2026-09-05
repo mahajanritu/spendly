@@ -65,7 +65,7 @@ export default function Login() {
           <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
         </div>
 
-        <a href="https://spendly-production-1721.up.railway.app/api/google/login"
+        <a href="https://spendly-ib4j.onrender.com/api/google/login"
           style={{
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
             width: '100%', padding: '12px',
